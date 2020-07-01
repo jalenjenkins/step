@@ -13,16 +13,45 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random hidden talent to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomFact() {
+  const facts =
+      ['I know over 100 digits of pi!', 'I play piano', 'I can play French Horn', 'I can play guitar', 'I can play saxophone', 'I can speak a little Spanish!'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const fact = facts[Math.floor(Math.random() * facts.length)];
 
   // Add it to the page.
+  const factContainer = document.getElementById('fact-container');
+  factContainer.innerText = fact;
+}
+function dataFetch() {
+  console.log('Fetching data.');
+  
+  const dataPromise= fetch('/data');
+  
+  dataPromise.then(handleData);
+}
+
+function handleData(data) {
+  console.log('Handling the Data');
+
+  const textPromise = data.text();
+  
+  textPromise.then(addGreetingToDom);
+}
+
+function addGreetingToDom(greeting) {
+  console.log('Adding greeting to DOM: '+ greeting)
+  
   const greetingContainer = document.getElementById('greeting-container');
+  
   greetingContainer.innerText = greeting;
+}
+
+function getData() {
+  fetch('/data').then(data => data.text()).then((greeting) => {
+    document.getElementById('greeting-container').innerText = greeting;
+  });
 }
